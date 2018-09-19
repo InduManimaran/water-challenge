@@ -9,6 +9,12 @@
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
+        .marker {
+          background-color: white;
+          cursor: pointer;
+          padding: 5px;
+          border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -119,6 +125,16 @@ function getData(callback) {
           coords = getCoords([ result.geometry.coordinates[0] - -0.003776000000002, result.geometry.coordinates[1] + 0.00020300000000617047 ]);
           let featureRed = buildFeatureRed(result,coords)
           window.dataObj.features.push(featureRed);
+
+          // create a HTML element for each feature
+          var el = document.createElement('div');
+          el.innerHTML = result.properties['ANALYTE_NA'];
+          el.className = 'marker';
+          // make a marker for each feature and add to the map
+          new mapboxgl.Marker(el)
+          .setLngLat(result.geometry.coordinates)
+          .addTo(map);
+
         });
         callback(window.dataObj);
       });
