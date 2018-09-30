@@ -136,7 +136,7 @@ function getData(callback) {
           .setLngLat(result.geometry.coordinates)
           .addTo(map);
 
-          el.addEventListener('click', () => {
+          el.addEventListener('click', function() {
             alert("Marker Clicked "+this.dataset.watersys);
           }); 
 
