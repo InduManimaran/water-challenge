@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+  </head>
+  <body>
+    <div id="charts" style="width:300px;">
+      
+    </div>
+    
+
+    <!--
+design guidance:
+      homepage put the contaminant icons inside circles
+      on top of a slanted striped background using colors:
+        light blue for clean water like pams yoga mat
+        dark grey signifying contaminnt
+        these same color sshould be used on the map bars
+
+      add markers to map
+      marker click parses the pwid file
+
+    -->
+    <script type="text/javascript">
+    let chartCount = 0;
+    function createChart() {
+      document.getElementById('charts').insertAdjacentHTML('beforeend','<canvas id="myChart'+chartCount+'"></canvas>')
+      var ctx = document.getElementById("myChart"+chartCount);
+      chartCount++;
+      let sampleDate = {
+        labels: ['2016-12-25','2016-12-26'],
+        datasets: [{
+          label: 'Arsenic (MCL: 5)',
+          data: [12, 19],
+          backgroundColor: 'red'
+        }]
+      }
+      var stackedBar = new Chart(ctx, {
+        type: 'bar',
+        data: sampleDate,
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
+    }
+
+    fetch('data/parsed/CA0210001')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(JSON.stringify(myJson));
+    });
+    /*
+          fetch file
+      see how many different analytes there are
+      for each analyte do different chart
+      order items by dates
+      create label array
+      create data array
+      MCL and analyte name to be displayed in legend
+*/
+    </script>
+  
+  </body>
+</html>
