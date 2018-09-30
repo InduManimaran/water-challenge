@@ -129,12 +129,12 @@ function getData(callback) {
           // create a HTML element for each feature
           var el = document.createElement('div');
           el.innerHTML = result.properties['ANALYTE_NA'];
-          el.dataset.watersys = result.properties['WATER_SY_1'];
+          //el.dataset.watersys = result.properties['WATER_SY_1'];
           el.className = 'marker';
 
           let customPopUp = new mapboxgl.Popup(
             { offset: 25 }
-          ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+this.dataset.watersys+'"></iframe>')
+          ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+result.properties['WATER_SY_1']+'"></iframe>')
 
           // make a marker for each feature and add to the map
           new mapboxgl.Marker(el)
