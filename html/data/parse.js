@@ -18,7 +18,7 @@ csv()
   });
 
   for (var [key, value] of systemMap) {
-    fs.writeFile(__dirname + '/' + key, JSON.stringify(systemMap.get(key)), 'utf8', function (err) {
+    fs.writeFile(__dirname + '/parsed/' + key + '.json', JSON.stringify(systemMap.get(key)), 'utf8', function (err) {
       if (err) {
         return console.log(err);
       }
