@@ -137,9 +137,15 @@ function getData(callback) {
           .addTo(map);
 
           el.addEventListener('click', function() {
-            console.log(this);
-            console.log(this.dataset)
-            alert("Marker Clicked "+this.dataset.watersys);
+
+              var customPopUp = new mapboxgl.Popup(
+                {
+                  anchor: 'bottom',   // To show popup on top
+                  offset: { 'bottom': [0, -10] },  // To prevent popup from over shadowing the marker.
+                }
+              ).setHTML(<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+this.dataset.watersys+'"></iframe>); // You can set any valid HTML.
+              .addTo(map);
+
           }); 
 
         });

@@ -4,7 +4,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
   </head>
   <body>
-    <div id="charts" style="width:800px;">
+    <div id="charts">
       
     </div>
     
@@ -58,7 +58,7 @@ design guidance:
       });
     }
 
-    fetch('https://aaronhans.github.io/water-challenge/html/data/parsed/CA0210001.json')
+    fetch('https://aaronhans.github.io/water-challenge/html/data/parsed/'+window.location.search.replace('?','')+'.json')
     .then(function(response) {
       return response.json();
     })
