@@ -131,21 +131,18 @@ function getData(callback) {
           el.innerHTML = result.properties['ANALYTE_NA'];
           el.dataset.watersys = result.properties['WATER_SY_1'];
           el.className = 'marker';
+
+          let customPopUp = new mapboxgl.Popup(
+            { offset: 25 }
+          ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+this.dataset.watersys+'"></iframe>')
+
           // make a marker for each feature and add to the map
           new mapboxgl.Marker(el)
           .setLngLat(result.geometry.coordinates)
+          .setPopup(customPopUp)
           .addTo(map);
 
           el.addEventListener('click', function() {
-
-              var customPopUp = new mapboxgl.Popup(
-                {
-                  anchor: 'bottom',   // To show popup on top
-                  offset: { 'bottom': [0, -10] },  // To prevent popup from over shadowing the marker.
-                }
-              ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+this.dataset.watersys+'"></iframe>')
-              .addTo(map);
-
           }); 
 
         });
