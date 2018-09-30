@@ -129,7 +129,7 @@ function getData(callback) {
           // create a HTML element for each feature
           var el = document.createElement('div');
           el.innerHTML = result.properties['ANALYTE_NA'];
-          el.setAttribute('data','watersys: '+result.properties['ANALYTE_NAWATER_SY_1'])
+          el.dataset.watersys = result.properties['ANALYTE_NAWATER_SY_1'];
           el.className = 'marker';
           // make a marker for each feature and add to the map
           new mapboxgl.Marker(el)
