@@ -4,7 +4,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
   </head>
   <body>
-    <div id="charts" style="width:300px;">
+    <div id="charts" style="width:800px;">
       
     </div>
     
@@ -23,16 +23,24 @@ design guidance:
     -->
     <script type="text/javascript">
     let chartCount = 0;
-    function createChart() {
+    function createChart(analyteName,items) {
       document.getElementById('charts').insertAdjacentHTML('beforeend','<canvas id="myChart'+chartCount+'"></canvas>')
       var ctx = document.getElementById("myChart"+chartCount);
       chartCount++;
+
+      items.sort(compare);
+      labelsArray = [];
+      dataArray = [];
+      items.forEach(function(item) {
+        labelsArray.push(item.VIOL_BEGIN_DATE);
+        dataArray.push(item.RESULT.split(' ')[0])
+      })
       let sampleDate = {
-        labels: ['2016-12-25','2016-12-26'],
+        labels: labelsArray,
         datasets: [{
-          label: 'Arsenic (MCL: 5)',
-          data: [12, 19],
-          backgroundColor: 'red'
+          label: analyteName+' (MCL: '+items[0].MCL+')',
+          data: dataArray,
+          backgroundColor: 'gray'
         }]
       }
       var stackedBar = new Chart(ctx, {
@@ -50,22 +58,34 @@ design guidance:
       });
     }
 
-    fetch('data/parsed/CA0210001')
+    fetch('https://aaronhans.github.io/water-challenge/html/data/parsed/CA0210001.json')
     .then(function(response) {
       return response.json();
     })
     .then(function(myJson) {
-      console.log(JSON.stringify(myJson));
+      let analyteMap = new Map();
+      myJson.forEach(function(item) {
+        let existingItem = analyteMap.get(item.ANALYTE_NAME);
+        let analyteArray = [];
+        if(existingItem) {
+          analyteArray = existingItem;
+        }
+        analyteArray.push(item);
+        analyteMap.set(item.ANALYTE_NAME,analyteArray);
+      })
+      for (var [key, value] of analyteMap) {
+        console.log(value)
+        createChart(key,value);
+      }
     });
-    /*
-          fetch file
-      see how many different analytes there are
-      for each analyte do different chart
-      order items by dates
-      create label array
-      create data array
-      MCL and analyte name to be displayed in legend
-*/
+
+    function compare(a,b) {
+      if (a.VIOL_BEGIN_DATE < b.VIOL_BEGIN_DATE)
+        return -1;
+      if (a.VIOL_BEGIN_DATE > b.VIOL_BEGIN_DATE)
+        return 1;
+      return 0;
+    }
     </script>
   
   </body>
