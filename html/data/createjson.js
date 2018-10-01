@@ -32,9 +32,11 @@ fs.readFile(waterSystemDataFile, 'utf8', function (err,data) {
           waterSystemDataFeatures.forEach(function(system) {
             //console.log(system.properties.pwsid + '==' + item.WATER_SYSTEM_NUMBER)
             if(system.properties.pwsid == item.WATER_SYSTEM_NUMBER) {
-              featureObj.geometry = system.geometry;
-              //console.log('found one')
-              matchFound = true;
+              if(system.geometry.type == 'Point') {
+                featureObj.geometry = system.geometry;
+                //console.log('found one')
+                matchFound = true;
+              }
             }
           })
           if(!matchFound) {
