@@ -25,8 +25,10 @@ fs.readFile(waterSystemDataFile, 'utf8', function (err,data) {
       let outputJSON = {
         "type": "FeatureCollection",
         "features": [] };
+        let count = 1;
         jsonObj.forEach(function(item) {
-          let featureObj = {"type": "Feature"}
+          let featureObj = {"type": "Feature", "id": count}
+          count++;
           featureObj.properties = item;
           let matchFound = false;
           waterSystemDataFeatures.forEach(function(system) {
