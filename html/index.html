@@ -110,7 +110,7 @@ function getData(callback) {
   };
 
 
-  fetch('violations_proportion.json').then(function(response) {
+  fetch('data/violations-output.json').then(function(response) {
     var contentType = response.headers.get("content-type");
     if(contentType && contentType.indexOf("application/json") !== -1) {
       return response.json().then(function(json) {
@@ -128,13 +128,13 @@ function getData(callback) {
 
           // create a HTML element for each feature
           var el = document.createElement('div');
-          el.innerHTML = result.properties['ANALYTE_NA'];
+          el.innerHTML = result.properties['ANALYTE_NAME'];
           //el.dataset.watersys = result.properties['WATER_SY_1'];
           el.className = 'marker';
 
           let customPopUp = new mapboxgl.Popup(
             { offset: 25 }
-          ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+result.properties['WATER_SY_1']+'"></iframe>')
+          ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+result.properties['WATER_SYSTEM_NUMBER']+'"></iframe>')
 
           // make a marker for each feature and add to the map
           new mapboxgl.Marker(el)
@@ -162,7 +162,7 @@ function buildFeatureMCL(item,coords) {
       "level": 1,
       "height": 5000,
       "base_height": 0,
-      "color": "blue"
+      "color": "#07dbf6"
     },
     "geometry": {
       "coordinates": coords,
@@ -179,7 +179,7 @@ function buildFeatureContaminant(item,coords) {
       "level": 1,
       "height": 5000 * item.properties.proportion_mcl,
       "base_height": 0,
-      "color": "red"
+      "color": "#3f3e3e"
     },
     "geometry": {
       "coordinates": coords,
