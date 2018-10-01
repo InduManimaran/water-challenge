@@ -119,21 +119,31 @@ function getData(callback) {
           recordsFound++;
           let coords = getCoords(result.geometry.coordinates);
           console.log(result.geometry.coordinates)
-          let featureBlue = buildFeatureBlue(result,coords)
+          let featureBlue = buildFeatureContaminant(result,coords)
           window.dataObj.features.push(featureBlue);
 
           coords = getCoords([ result.geometry.coordinates[0] - -0.003776000000002, result.geometry.coordinates[1] + 0.00020300000000617047 ]);
-          let featureRed = buildFeatureRed(result,coords)
+          let featureRed = buildFeatureMCL(result,coords)
           window.dataObj.features.push(featureRed);
 
           // create a HTML element for each feature
           var el = document.createElement('div');
           el.innerHTML = result.properties['ANALYTE_NA'];
+          //el.dataset.watersys = result.properties['WATER_SY_1'];
           el.className = 'marker';
+
+          let customPopUp = new mapboxgl.Popup(
+            { offset: 25 }
+          ).setHTML('<iframe src="https://aaronhans.github.io/water-challenge/html/chart.html?'+result.properties['WATER_SY_1']+'"></iframe>')
+
           // make a marker for each feature and add to the map
           new mapboxgl.Marker(el)
           .setLngLat(result.geometry.coordinates)
+          .setPopup(customPopUp)
           .addTo(map);
+
+          el.addEventListener('click', function() {
+          }); 
 
         });
         callback(window.dataObj);
@@ -145,7 +155,7 @@ function getData(callback) {
 
 }
 
-function buildFeatureRed(item,coords) {
+function buildFeatureMCL(item,coords) {
   return {
     "type": "Feature",
     "properties": {
@@ -162,7 +172,7 @@ function buildFeatureRed(item,coords) {
   };
 }
 
-function buildFeatureBlue(item,coords) {
+function buildFeatureContaminant(item,coords) {
   return {
     "type": "Feature",
     "properties": {
