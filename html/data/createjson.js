@@ -60,7 +60,7 @@ fs.readFile(waterSystemDataFile, 'utf8', function (err,data) {
             featureObj.properties.result_value = result,
             featureObj.properties.mcl_valu = mcl,
             featureObj.properties.proportion_mcl = result / mcl
-            if((result / mcl) > 0) {
+            if((result / mcl) > 1.5) {
               outputJSON.features.push(featureObj);
             } else {
               console.log(featureObj.properties.RESULT.split(' ')[0])
