@@ -118,7 +118,7 @@ function getData(callback) {
         json.features.forEach(function(result) {
           recordsFound++;
           let coords = getCoords(result.geometry.coordinates);
-          console.log(result.geometry.coordinates)
+          //console.log(result.geometry.coordinates)
           let featureBlue = buildFeatureContaminant(result,coords)
           window.dataObj.features.push(featureBlue);
 
@@ -129,7 +129,6 @@ function getData(callback) {
           // create a HTML element for each feature
           var el = document.createElement('div');
           el.innerHTML = result.properties['ANALYTE_NAME'];
-          //el.dataset.watersys = result.properties['WATER_SY_1'];
           el.className = 'marker';
 
           let customPopUp = new mapboxgl.Popup(
@@ -141,9 +140,6 @@ function getData(callback) {
           .setLngLat(result.geometry.coordinates)
           .setPopup(customPopUp)
           .addTo(map);
-
-          el.addEventListener('click', function() {
-          }); 
 
         });
         callback(window.dataObj);
@@ -162,7 +158,7 @@ function buildFeatureMCL(item,coords) {
       "level": 1,
       "height": 5000,
       "base_height": 0,
-      "color": "#07dbf6"
+      "color": "blue"
     },
     "geometry": {
       "coordinates": coords,
@@ -179,7 +175,7 @@ function buildFeatureContaminant(item,coords) {
       "level": 1,
       "height": 5000 * item.properties.proportion_mcl,
       "base_height": 0,
-      "color": "#3f3e3e"
+      "color": "red"
     },
     "geometry": {
       "coordinates": coords,
