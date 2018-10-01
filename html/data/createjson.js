@@ -50,8 +50,8 @@ fs.readFile(waterSystemDataFile, 'utf8', function (err,data) {
               featureObj.geometry = {
                 "type": "Point",
                 "coordinates": [
-                  zipInfo.LNG,
-                  zipInfo.LAT
+                  parseFloat(zipInfo.LNG),
+                  parseFloat(zipInfo.LAT)
                 ]
               }
             }
